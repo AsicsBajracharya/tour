@@ -73,6 +73,15 @@ app.post('/api/v1/tours', (req, res) => {
   );
 });
 
+//HANDLING PATCH REQUEST
+app.patch('/api/v1/tours/:id', (req, res) => {
+  //THIS ROUTE IS NOT IMPLEMENTED YET
+  res.status(200).json({
+    status: 'pending',
+    message: 'This route is not implemented yet',
+  });
+});
+
 const port = 8000;
 app.listen(port, () => {
   console.log('server started at port', port);
