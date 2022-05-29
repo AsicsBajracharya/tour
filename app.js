@@ -2,9 +2,12 @@ const express = require('express');
 
 const fs = require('fs');
 
+const morgan = require('morgan');
+
 const app = express();
 
 //MIDDLWARES
+app.use(morgan('dev'));
 app.use(express.json()); //ADDS DATA TO THE REQUEST BODY
 
 //CUSTOM MIDDLEWARE
@@ -107,6 +110,7 @@ app
   .patch(updateATour)
   .delete(deleteATour);
 
+//SERVER
 const port = 8000;
 app.listen(port, () => {
   console.log('server started at port', port);
