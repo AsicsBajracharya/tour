@@ -92,6 +92,42 @@ const deleteATour = (req, res) => {
   });
 };
 
+//USER ROUTE HANDLERS
+
+const getAllusers = (req, res) => {
+  res.status(500).json({
+    status: 'success',
+    message: 'This route is not implemented yet',
+  });
+};
+
+const getUser = (req, res) => {
+  res.status(500).json({
+    status: 'success',
+    message: 'This route is not implemented yet',
+  });
+};
+
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: 'success',
+    message: 'This route is not implemented yet',
+  });
+};
+const udpateUser = (req, res) => {
+  res.status(500).json({
+    status: 'success',
+    message: 'This route is not implemented yet',
+  });
+};
+
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'success',
+    message: 'This route is not implemented yet',
+  });
+};
+
 // app.get('/api/v1/tours', getAllTours);
 
 // app.get('/api/v1/tours/:id', getATour );
@@ -102,7 +138,7 @@ const deleteATour = (req, res) => {
 
 // app.delete('/api/v1/tours/:id', deleteATour);
 
-//CHAINED ROUTES
+//CHAINED TOUR ROUTES
 app.route('/api/v1/tours').get(getAllTours).post(createATour);
 app
   .route('/api/v1/tours/:id')
@@ -110,6 +146,14 @@ app
   .patch(updateATour)
   .delete(deleteATour);
 
+//CHAINED USER ROUTES
+
+app.route('/api/v1/users').get(getAllusers).post(createUser);
+app
+  .route('/api/v1/users/:id')
+  .get(getUser)
+  .patch(udpateUser)
+  .delete(deleteUser);
 //SERVER
 const port = 8000;
 app.listen(port, () => {
