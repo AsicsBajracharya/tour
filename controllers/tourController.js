@@ -6,6 +6,18 @@ const tours = JSON.parse(
 );
 
 //ROUTE HANDLERS
+
+exports.checkID = (req, res, next, val) => {
+  console.log('param middleware ran');
+  if (val > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  next();
+};
+
 exports.getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -21,13 +33,6 @@ exports.getATour = (req, res) => {
   // '?' FOR OPTIONAL PARAMS
   // console.log(req.params);
   const tour = tours.filter((el) => el.id == req.params.id);
-  if (req.params.id > tours.length) {
-    res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-    return;
-  }
   res.status(200).json({
     status: 'success',
     results: tours?.length,

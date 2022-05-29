@@ -4,6 +4,9 @@ const tourController = require('../controllers/tourController');
 
 const router = express.Router();
 
+//RUNS ONLY WHENE SPECIFIC PARAMATERS ARE PASSED
+router.param('id', tourController.checkID);
+
 // //MOUNTING ROUTER
 // app.use('/api/v1/tours', router);
 
