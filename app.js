@@ -10,8 +10,13 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 //MIDDLWARES
-app.use(morgan('dev'));
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev')); //3RD PARTY LOGGER  MIDDLEWARE
+}
+
 app.use(express.json()); //ADDS DATA TO THE REQUEST BODY
+app.use(express.static(`${__dirname}/public`)); //SERVES STATIC FILES
 
 //CUSTOM MIDDLEWARE
 app.use((req, res, next) => {
