@@ -5,7 +5,7 @@ const tourController = require('../controllers/tourController');
 const router = express.Router();
 
 //RUNS ONLY WHENE SPECIFIC PARAMATERS ARE PASSED
-router.param('id', tourController.checkID);
+// router.param('id', tourController.checkID);
 
 // //MOUNTING ROUTER
 // app.use('/api/v1/tours', router);
@@ -14,7 +14,7 @@ router.param('id', tourController.checkID);
 router
   .route('/')
   .get(tourController.getAllTours)
-  .post(tourController.checkBody, tourController.createATour);
+  .post(tourController.createATour);
 router
   .route('/:id')
   .get(tourController.getATour)
