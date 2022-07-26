@@ -30,28 +30,42 @@ exports.checkID = (req, res, next, val) => {
 //   next();
 // };
 
-exports.getAllTours = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    requestedAt: req.requestTime,
-    // results: tours?.length,
-    // data: {
-    //   tours,
-    // },
-  });
+exports.getAllTours = async (req, res) => {
+  try {
+    const tours = await Tour.find();
+    res.status(200).json({
+      status: 'success',
+      requestedAt: req.requestTime,
+      results: tours?.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (e) {
+    res.status(400).json({
+      status: 'failed',
+      message: e,
+    });
+  }
 };
 
-exports.getATour = (req, res) => {
-  // '?' FOR OPTIONAL PARAMS
-  // console.log(req.params);
-  // const tour = tours.filter((el) => el.id == req.params.id);
-  // res.status(200).json({
-  //   status: 'success',
-  //   results: tours?.length,
-  //   data: {
-  //     tour,
-  //   },
-  // });
+exports.getATour = async (req, res) => {
+  console.log(req.params, 'params');
+  try {
+    const tour = await Tour.findById(req.params.id);
+    res.status(200).json({
+      status: 'success',
+      requestedAt: req.requestTime,
+      data: {
+        tour,
+      },
+    });
+  } catch (e) {
+    res.status(400).json({
+      status: 'failed',
+      message: e,
+    });
+  }
 };
 
 exports.createATour = async (req, res) => {
