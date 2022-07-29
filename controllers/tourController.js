@@ -53,6 +53,16 @@ exports.getAllTours = async (req, res) => {
     } else {
       query = query.sort('-createdAt');
     }
+
+    //3 FIELD LIMITING
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+      // query = query.select('name duration price')
+    } else {
+      query = query.select('-__v');
+    }
+
     //{difficulty: 'easy, duration: {$gte: 5}}
     //OPERATORS TO BE EXCLUDED gte, gt, lte,lt
 
