@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const slugify = require('slugify');
+
 //SCHEMA
 const tourSchema = new mongoose.Schema(
   {
@@ -8,6 +10,9 @@ const tourSchema = new mongoose.Schema(
       required: [true, 'A tour must have a name'],
       unique: true,
       trim: true,
+    },
+    slug: {
+      type: String,
     },
     duration: {
       type: Number,
@@ -63,6 +68,24 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+//DOCUMENT MIDDLEWARE
+tourSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+tourSchema.pre('save', function (next) {
+  //PRE AND POST MIDDLEWARE CAN BE MULTIPLE
+  // console.log('will save document....');
+  next();
+});
+
+tourSchema.post('save', function (doc, next) {
+  // console.log(doc);
+  next();
+});
+
+//VIRTUAL PROPERTIES
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
