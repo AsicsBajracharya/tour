@@ -61,6 +61,7 @@ exports.getAllTours = catchAsync(async (req, res) => {
     },
   });
 });
+
 exports.getATour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id);
 

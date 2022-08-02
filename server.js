@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 
 const dotenv = require('dotenv');
 
+//GLOBAL UNCAUGHTEXCEPTION HANDLER
+process.on('uncaughtException', (err) => {
+  console.log(err);
+  process.exit(1); //0 FOR SUCCESS 1 FOR UNCALLED EXCEPTION
+});
+
 dotenv.config({ path: './config.env' });
 
 const app = require('./app');
@@ -48,4 +54,12 @@ mongoose
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log('server started at port', port);
+});
+
+//GLOBAL UNHANDLEDREJECTION ERROR HANDLER
+process.on('unhandledRejection', (err) => {
+  console.log(err);
+  server.close(() => {
+    process.exit(1); //0 FOR SUCCESS 1 FOR UNCALLED EXCEPTION
+  });
 });
