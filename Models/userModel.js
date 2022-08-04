@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const validator = require('validator');
 
+const bcrypt = require('bcryptjs');
+
 //SCHEMA
 const userSchema = new mongoose.Schema({
   name: {
@@ -26,13 +28,29 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A user must provide a password'],
     trim: true,
-    minlength: 8,
   },
   passwordConfirm: {
     type: String,
     required: [true, 'A user must confirm password'],
     trim: true,
+    validate: {
+      //THIS WORKS ON ONLY SAVE/CREATE
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: 'Passwords do not match',
+    },
   },
+});
+
+//DOCUMENT MIDDLEWARE
+//PASSWORD ENCRYPTION
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  this.passwordConfirm = undefined; //  TO PREVENT FROM SAVING INTO THE DATABASE
+
+  next();
 });
 
 //MODAL
